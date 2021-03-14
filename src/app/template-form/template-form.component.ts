@@ -1,6 +1,7 @@
 import { User } from './../User';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, NgForm } from '@angular/forms';
+import { ConfirmEqualValidatorDirective } from '../validators/confirm-equal-validator.directive';
 
 @Component({
   selector: 'app-template-form',
@@ -25,12 +26,8 @@ export class TemplateFormComponent implements OnInit {
   ngOnInit(): void {}
 
   onSubmit(myformData: NgForm) {
-    this.displayData = true;
+    if (myformData.valid) {
+      this.displayData = true;
+    }
   }
-
-  // OnClear(myformData: NgForm) {
-  //   myformData.reset();
-  //   this.displayData = false;
-
-  // }
 }
