@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+
+import { MustMatch } from '../shared/passwordmatch.validator';
 
 @Component({
   selector: 'app-reactive-form',
@@ -7,22 +9,48 @@ import { FormGroup, FormControl } from '@angular/forms';
   styleUrls: ['./reactive-form.component.css'],
 })
 export class ReactiveFormComponent implements OnInit {
-  reactiveForm = new FormGroup({
-    fullName: new FormControl('Vishnu'),
-    email: new FormControl('vishnugettam@gmail.com'),
-    address: new FormControl('Bangalore'),
-    city: new FormControl('Bng'),
-    phoneNumber: new FormControl('8073863689'),
-    password: new FormControl('Vishnu@G'),
-    confirmpassword: new FormControl('Vishnu@G'),
-  });
-  displayData:boolean = false;
+  reactiveForm: FormGroup;
 
-  constructor() {}
+  displayData: boolean = false;
+
+  constructor(private _myreactiveForm: FormBuilder) {
+    this.reactiveForm = this._myreactiveForm.group(
+      {
+        fullName: ['', Validators.required],
+        email: [
+          '',
+          [
+            Validators.required,
+            Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$'),
+          ],
+        ],
+        address: ['', Validators.required],
+        city: ['', Validators.required],
+        phoneNumber: [
+          '',
+          [
+            Validators.required,
+            Validators.minLength(10),
+            Validators.pattern('^((\\+91-?)|0)?[0-9]{10}$'),
+          ],
+        ],
+        password: ['', Validators.required],
+        confirmpassword: ['', [Validators.required]],
+      },
+      {
+        validator: MustMatch('password', 'confirmpassword'),
+      }
+    );
+  }
 
   ngOnInit(): void {}
 
-  SubmitForm(){
-    this.displayData=true;
+  SubmitForm() {
+    if (this.reactiveForm.valid) {
+      this.displayData = true;
+    }
+    else{
+      return;
+    }
   }
 }

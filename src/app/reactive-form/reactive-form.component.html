@@ -1,10 +1,9 @@
-<h2>Reactive Form </h2>
+<h2>Reactive Form</h2>
 
 <div class="container">
-  <form [formGroup]="reactiveForm"  (ngSubmit)="SubmitForm()">
-    <div class="form-group row">
-      <label for="inputFullName" class="col-sm-2 col-form-label"
-        >Full Name</label
+    <form [formGroup]="reactiveForm" (ngSubmit)="SubmitForm()">
+        <div class="form-group row">
+            <label for="inputFullName" class="col-sm-2 col-form-label">Full Name</label
       >
       <div class="col-sm-10">
         <input
@@ -13,55 +12,83 @@
           id="inputFullName"
           placeholder="Full Name"
           formControlName="fullName"
+          [class.is-invalid]="
+            reactiveForm.get('fullName')!.invalid &&
+            reactiveForm.get('fullName')!.touched
+          "
         />
+
+        <small
+          *ngIf="
+            reactiveForm.get('fullName')!.invalid &&
+            reactiveForm.get('fullName')!.touched
+          "
+          class="text-danger"
+        >
+          Full Name is required
+        </small>
       </div>
     </div>
     <div class="form-group row">
       <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
-      <div class="col-sm-10">
-        <input
-          type="email"
-          class="form-control"
-          id="inputEmail"
-          placeholder="Email"
+            <div class="col-sm-10">
+                <input type="email" class="form-control" id="inputEmail" placeholder="Email" formControlName="email" [class.is-invalid]="
+            reactiveForm.get('email')!.invalid &&
+            reactiveForm.get('email')!.touched
+          " />
 
-          formControlName="email"
-        />
-      </div>
-    </div>
+                <div *ngIf="
+            reactiveForm.get('email')!.errors &&
+            (reactiveForm.get('email')!.invalid ||
+              reactiveForm.get('email')!.touched)
+          ">
+                    <small class="text-danger" *ngIf="
+              reactiveForm.get('email')!.errors!.required &&
+              reactiveForm.get('email')!.touched
+            ">
+            Email is required
+          </small>
+                    <small class="text-danger" *ngIf="reactiveForm.get('email')!.errors!.pattern">
+            Email is invalid
+          </small>
+                </div>
+            </div>
+        </div>
 
+        <div class="form-group row">
+            <label for="inputAddress" class="col-sm-2 col-form-label">Address</label>
+            <div class="col-sm-10">
+                <textarea name="address" id="inputAddress" cols="30" rows="10" class="form-control" formControlName="address" [class.is-invalid]="
+                reactiveForm.get('address')!.invalid &&
+                reactiveForm.get('address')!.touched
+              "></textarea>
+                <small *ngIf="
+                  reactiveForm.get('address')!.invalid &&
+                  reactiveForm.get('address')!.touched
+                " class="text-danger">
+                Address is required
+              </small>
+            </div>
+        </div>
 
-    <div class="form-group row">
-      <label for="inputAddress" class="col-sm-2 col-form-label"
-        >Address</label
-      >
-      <div class="col-sm-10">
+        <div class="form-group row">
+            <label for="inputCity" class="col-sm-2 col-form-label">City</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="inputCity" placeholder="City" formControlName="city" [class.is-invalid]="
+                reactiveForm.get('city')!.invalid &&
+                reactiveForm.get('city')!.touched
+              " />
+                <small *ngIf="
+                  reactiveForm.get('city')!.invalid &&
+                  reactiveForm.get('city')!.touched
+                " class="text-danger">
+                City is required
+              </small>
+            </div>
+        </div>
 
-        <textarea name="address" id="inputAddress" cols="30" rows="10" class="form-control" formControlName="address" ></textarea>
-      </div>
-    </div>
-
-
-    <div class="form-group row">
-      <label for="inputCity" class="col-sm-2 col-form-label"
-        >City</label
-      >
-      <div class="col-sm-10">
-        <input
-          type="text"
-          class="form-control"
-          id="inputCity"
-          placeholder="City"
-          formControlName="city"
-
-        />
-      </div>
-    </div>
-
-
-    <div class="form-group row">
-      <label for="inputPhoneNumber" class="col-sm-2 col-form-label"
-        >Phone Number</label
+        <div class="form-group row">
+            <label for="inputPhoneNumber" class="col-sm-2 col-form-label">Phone Number</label
       >
       <div class="col-sm-10">
         <input
@@ -70,8 +97,27 @@
           id="inputPhoneNumber"
           placeholder="Phone Number"
           formControlName="phoneNumber"
-
+          [class.is-invalid]="
+                reactiveForm.get('phoneNumber')!.invalid &&
+                reactiveForm.get('phoneNumber')!.touched
+              "
         />
+        <div *ngIf="
+        reactiveForm.get('phoneNumber')!.errors &&
+        (reactiveForm.get('phoneNumber')!.invalid ||
+          reactiveForm.get('phoneNumber')!.touched)
+      ">
+                <small class="text-danger" *ngIf="
+          reactiveForm.get('phoneNumber')!.errors!.required &&
+          reactiveForm.get('phoneNumber')!.touched
+        ">
+        PhoneNumber is required
+      </small>
+                <small class="text-danger" *ngIf="reactiveForm.get('phoneNumber')!.errors!.pattern">
+                  PhoneNumber is invalid
+      </small>
+            </div>
+
       </div>
     </div>
 
@@ -86,8 +132,16 @@
           id="inputPassword"
           placeholder="Password"
           formControlName="password"
-
-        />
+          [class.is-invalid]="
+          reactiveForm.get('password')!.invalid &&
+          reactiveForm.get('password')!.touched
+        " />
+          <small *ngIf="
+            reactiveForm.get('password')!.invalid &&
+            reactiveForm.get('password')!.touched
+          " class="text-danger">
+          Password is required
+        </small>
       </div>
     </div>
     <div class="form-group row">
@@ -101,52 +155,62 @@
           id="inputConfirmPassword"
           placeholder="Confirm Password"
           formControlName="confirmpassword"
+          [class.is-invalid]="
+          reactiveForm.get('confirmpassword')!.invalid &&
+          reactiveForm.get('confirmpassword')!.touched
+        " />
+        <div *ngIf="
+        reactiveForm.get('confirmpassword')!.errors &&
+        (reactiveForm.get('confirmpassword')!.invalid ||
+          reactiveForm.get('confirmpassword')!.touched)
+      ">
+                <small class="text-danger" *ngIf="
+          reactiveForm.get('confirmpassword')!.errors!.required &&
+          reactiveForm.get('confirmpassword')!.touched
+        ">
+        Confirm Password is required
+      </small>
+                <small class="text-danger" *ngIf="reactiveForm.get('confirmpassword')!.errors!.mustMatch">
+                 Confirm Password and Password should match
+      </small>
+            </div>
 
-        />
+
+
       </div>
     </div>
 
     <div class="form-group row">
       <div class="col-sm-10">
         <button type="submit" class="btn btn-primary">Register</button>
-
       </div>
     </div>
   </form>
 </div>
 <br />
 
-
-
-<div *ngIf="displayData" >
+<div *ngIf="displayData">
   <div class="container">
     <div class="form-group row">
-      <label class="col-sm-2 col-form-label">Full Name : </label>
-      {{ reactiveForm.value.fullName }}
-    </div>
-    <div class="form-group row">
-      <label class="col-sm-2 col-form-label">Email : </label>
-      {{ reactiveForm.value.email }}
-    </div>
-    <div class="form-group row">
-      <label class="col-sm-2 col-form-label">Address : </label>
-      {{ reactiveForm.value.address }}
-    </div>
-    <div class="form-group row">
-      <label class="col-sm-2 col-form-label">City : </label>
-      {{ reactiveForm.value.city }}
-    </div>
-    <div class="form-group row">
-      <label class="col-sm-2 col-form-label">Phone Number : </label>
-      {{ reactiveForm.value.phoneNumber }}
-    </div>
-    <div class="form-group row">
-      <label class="col-sm-2 col-form-label">Password : </label>
-      {{ reactiveForm.value.password }}
-    </div>
-    <div class="form-group row">
-      <label class="col-sm-2 col-form-label">Confirm Password : </label>
-      {{ reactiveForm.value.confirmpassword }}
-    </div>
-  </div>
+      <label class="col-sm-2 col-form-label">Full Name : </label> {{ reactiveForm.value.fullName }}
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Email : </label> {{ reactiveForm.value.email }}
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Address : </label> {{ reactiveForm.value.address }}
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">City : </label> {{ reactiveForm.value.city }}
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Phone Number : </label> {{ reactiveForm.value.phoneNumber }}
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Password : </label> {{ reactiveForm.value.password }}
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Confirm Password : </label> {{ reactiveForm.value.confirmpassword }}
+        </div>
+</div>
 </div>
